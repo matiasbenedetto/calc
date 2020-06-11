@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { MINUS, PLUS, MULTIPLY, DIVIDE, ERRORS } from './constants';
+import axios from 'axios';
+import { MINUS, PLUS, MULTIPLY, DIVIDE, ERRORS } from '../../constants';
 import { parseDigit, displayNumber } from './utils';
 import Button from '../Button';
 import Viewr from '../Viewr';
-
-
 
 function Calc() {
   const [result, setResult] = useState(0);
@@ -13,17 +12,18 @@ function Calc() {
   const [right, setRight] = useState(null);
   const [operator, setOperator] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     updateDisplay();
   }, [left, operator, right, result]);
 
-  function updateDisplay () {
+  const updateDisplay = () => {
     const newDisplay = `${displayNumber(left)}${operator || ''}${displayNumber(right)}` || `${result || ''}`;
     setDisplay(newDisplay);
   }
 
-  function addNumber(digit) {
+  const addNumber = (digit) => {
     setError(null);
     if(!operator){
       const newNumber = parseDigit(digit, left);
@@ -34,7 +34,7 @@ function Calc() {
     }
   }
 
-  function addOperator(op) {
+  const addOperator = (op) => {
     if(op === '-' && (operator || !left) && !right) {
       addNumber(op);
     } else {
@@ -50,7 +50,7 @@ function Calc() {
     }
   }
 
-  function updateResult (newResult) {
+  const updateResult = (newResult) => {
     if(operator) {
       setResult(newResult);
       setDisplay(`${result}`);
@@ -60,33 +60,23 @@ function Calc() {
     }
   }
 
-  function calculate () {
-    let newResult;
-    if(operator === DIVIDE && !right) {
-      setError(ERRORS.DIVIDE_BY_ZERO);
+  const calculate = async () => {
+    setLoading(true);
+    const { data } = await axios.post('/result', {
+      left, operator, right,
+    });
+    if (data.error) {
+      setError(data.error);
       restore(false);
     } else {
-      switch(operator) {
-        case PLUS:
-          newResult = left + right;
-          break;
-        case MINUS:
-          newResult = left - right;
-          break;
-        case MULTIPLY:
-          newResult = left * right;
-          break;
-        case DIVIDE:
-          newResult = left / right;
-          break;
-      }
       updateResult(
-        Number(newResult.toFixed(9))
+        Number(data.result.toFixed(9))
       );
     }
+    setLoading(false);
   }
 
-  function restore (restoreError = true) {
+  const restore = (restoreError = true) => {
     setResult(0);
     setDisplay('0');
     setLeft(null);
@@ -95,6 +85,11 @@ function Calc() {
     if (restoreError) {
       setError(null);
     }
+  }
+
+  const opButtonProps = {
+    color: '#ECEED8',
+    disabled: loading,
   }
 
   return (
@@ -114,22 +109,22 @@ function Calc() {
       </style>
       <Viewr result={`${result}`} display={display} error={error} />
         <div className="buttons">
-          <Button char={PLUS} onClick={() => addOperator(PLUS)} backgroundColor="#ECEED8" />
-          <Button char={MINUS} onClick={() => addOperator(MINUS)} backgroundColor="#ECEED8" />
-          <Button char={DIVIDE} onClick={() => addOperator(DIVIDE)} backgroundColor="#ECEED8" />
-          <Button char={MULTIPLY} onClick={() => addOperator(MULTIPLY)} backgroundColor="#ECEED8" />
-          <Button char={"0"} onClick={() => addNumber(0)} />
-          <Button char={"1"} onClick={() => addNumber(1)} />
-          <Button char={"2"} onClick={() => addNumber(2)} />
-          <Button char={"3"} onClick={() => addNumber(3)} />
-          <Button char={"4"} onClick={() => addNumber(4)} />
-          <Button char={"5"} onClick={() => addNumber(5)} />
-          <Button char={"6"} onClick={() => addNumber(6)} />
-          <Button char={"7"} onClick={() => addNumber(7)} />
-          <Button char={"8"} onClick={() => addNumber(8)} />
-          <Button char={"9"} onClick={() => addNumber(9)} />
-          <Button char={"="} onClick={calculate} backgroundColor="#CCDE37"/>
-          <Button char={"C"} onClick={restore} backgroundColor="#D1735F" />
+          <Button char={PLUS} onClick={() => addOperator(PLUS)} {...opButtonProps} />
+          <Button char={MINUS} onClick={() => addOperator(MINUS)} {...opButtonProps} />
+          <Button char={DIVIDE} onClick={() => addOperator(DIVIDE)} {...opButtonProps} />
+          <Button char={MULTIPLY} onClick={() => addOperator(MULTIPLY)} {...opButtonProps} />
+          <Button char={"0"} onClick={() => addNumber(0)} disabled={loading} />
+          <Button char={"1"} onClick={() => addNumber(1)} disabled={loading} />
+          <Button char={"2"} onClick={() => addNumber(2)} disabled={loading} />
+          <Button char={"3"} onClick={() => addNumber(3)} disabled={loading} />
+          <Button char={"4"} onClick={() => addNumber(4)} disabled={loading} />
+          <Button char={"5"} onClick={() => addNumber(5)} disabled={loading} />
+          <Button char={"6"} onClick={() => addNumber(6)} disabled={loading} />
+          <Button char={"7"} onClick={() => addNumber(7)} disabled={loading} />
+          <Button char={"8"} onClick={() => addNumber(8)} disabled={loading} />
+          <Button char={"9"} onClick={() => addNumber(9)} disabled={loading} />
+          <Button char={"="} onClick={calculate} color="#CCDE37" disabled={loading}/>
+          <Button char={"C"} onClick={restore} color="#D1735F" disabled={loading} />
         </div>
     </div>
   )

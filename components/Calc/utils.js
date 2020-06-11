@@ -1,7 +1,6 @@
-import { MINUS } from './constants';
+import { MINUS } from '../../constants';
 
 export function displayNumber (n) {
-  console.log('n', n);
   if (n === null) {
     return '';
   }
