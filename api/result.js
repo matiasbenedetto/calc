@@ -1,4 +1,4 @@
-const { PLUS, MINUS, MULTIPLY, DIVIDE, ERRORS } = require("./constants");
+const { PLUS, MINUS, MULTIPLY, DIVIDE, ERRORS } = require("../constants");
 
 function result (req, res) {
   const { left, operator, right } = req.body;

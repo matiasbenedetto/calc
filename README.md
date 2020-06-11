@@ -16,7 +16,5 @@ written by **Matias Benedetto**
 - `npm run dev`
 - Navigate to http://localhost.com:3000
 
-
-### Todo
-- Add tests
-
+### Test
+- `npm run test`
