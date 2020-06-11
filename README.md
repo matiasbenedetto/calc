@@ -7,7 +7,7 @@ Use the live version:
 
 https://calculator.matiasbenedetto.now.sh/
 
-![image](https://user-images.githubusercontent.com/1310626/84337035-0281c500-ab6f-11ea-83d9-0a29ce3425f3.png)
+![screenshot](https://user-images.githubusercontent.com/1310626/84337406-d4e94b80-ab6f-11ea-9158-ced37c586124.gif)
 
 
 ### Development
