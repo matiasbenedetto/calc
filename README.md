@@ -1,7 +1,7 @@
 ## React Calc
 A simple calculator built with React
 
-written by Matias Benedetto
+written by **Matias Benedetto**
 
 Use the live version:
 
