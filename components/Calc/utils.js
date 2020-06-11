@@ -18,7 +18,7 @@ export function parseDigit (digit, value) {
   if (digit === MINUS) {
     return -0;
   } else {
-    if (!Object.is(digit, -0)) {
+    if (!Object.is(value, -0)) {
       return Number(`${value || ''}${digit}`);
     }
     return Number(`-${digit}`);
