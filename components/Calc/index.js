@@ -98,7 +98,7 @@ function Calc() {
   }
 
   return (
-    <div className="calc" onKeyPress={handleKeyPress} ref={calcRef}>
+    <div className="calc">
       <style jsx>
         {`
           .calc {
