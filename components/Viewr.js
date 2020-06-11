@@ -1,4 +1,4 @@
-function Viewr ({ result, display, error }) {
+function Viewr ({ result, display, error, loading }) {
   return (
     <div className="viewr">
       <style jsx>
@@ -7,6 +7,7 @@ function Viewr ({ result, display, error }) {
             border: 1px solid blue;
             color: darkblue;
             font-size: 1.5em;
+            position: relative;
           }
           h1 {
             padding: 20px;
@@ -18,10 +19,18 @@ function Viewr ({ result, display, error }) {
             border-top: cyan 1px solid;
             color: cyan;
           }
+          small {
+            font-size: 0.8em;
+            position: absolute;
+            right: 20px;
+            top:40%;
+            color: cyan;
+          }
         `}
       </style>
       <h1>{result}</h1>
       <p>{error || display || '0'}</p>
+      {loading && <small>loading ...</small>}
     </div>
   );
 }

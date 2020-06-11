@@ -107,7 +107,7 @@ function Calc() {
           }
         `}
       </style>
-      <Viewr result={`${result}`} display={display} error={error} />
+      <Viewr result={`${result}`} display={display} error={error} loading={loading}/>
         <div className="buttons">
           <Button char={PLUS} onClick={() => addOperator(PLUS)} {...opButtonProps} />
           <Button char={MINUS} onClick={() => addOperator(MINUS)} {...opButtonProps} />
