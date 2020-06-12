@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Viewr ({ result, display, error, loading }) {
   return (
     <div className="viewr">

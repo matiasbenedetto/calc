@@ -1,3 +1,5 @@
+import React from 'react';
+
 function Button ({ char, onClick, color, disabled }) {
   return (
     <button onClick={onClick} disabled={disabled}>

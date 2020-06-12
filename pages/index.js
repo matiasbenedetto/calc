@@ -1,4 +1,5 @@
 
+import React from 'react';
 import Calc from "../components/Calc/index";
 
 export default () => (
